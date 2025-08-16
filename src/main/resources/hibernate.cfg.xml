@@ -1,0 +1,31 @@
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mydb?useSSL=false</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">228117</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.release_mode">on_close</property>
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.connection.autocommit">false</property>
+
+    <!-- 重要配置 -->
+    <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
+    <property name="hibernate.hikari.minimumIdle">5</property>
+    <property name="hibernate.hikari.maximumPoolSize">10</property>
+    <property name="hibernate.hikari.idleTimeout">30000</property>
+
+    <!-- 显示SQL -->
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+
+    <!-- DDL自动更新 -->
+    <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <!-- 实体类映射 -->
+    <mapping class="org.example.orm.entity.Department"/>
+    <mapping class="org.example.orm.entity.Employee"/>
+
+  </session-factory>
+</hibernate-configuration>
