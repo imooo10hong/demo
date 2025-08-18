@@ -1,4 +1,4 @@
-package org.example.thread.test;
+package org.example.thread.demo;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
