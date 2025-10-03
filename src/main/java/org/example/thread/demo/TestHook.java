@@ -4,24 +4,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
 public class TestHook {
-
-  //异步任务的执行目标类
-  static class TargetTask implements Runnable {
-    static AtomicInteger taskNum = new AtomicInteger(1);
-    String taskName;
-    public TargetTask() {
-      taskName = "task-" + taskNum.get();
-      taskNum.incrementAndGet();
-    }
-    public void run() {
-      System.out.println("任务：" + taskName + " doing");
-      System.out.println(taskName + " 运行结束.");
-    }
-  }
 
   @Test
   public void testHooks() throws InterruptedException {

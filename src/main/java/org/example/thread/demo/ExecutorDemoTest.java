@@ -4,29 +4,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
 public class ExecutorDemoTest {
 
   public static final int SLEEP_GAP = 1000;
-
-  //异步任务的执行目标类
-  static class TargetTask implements Runnable {
-
-    static AtomicInteger taskNum = new AtomicInteger(1);
-    private final String taskName;
-
-    public TargetTask() {
-      taskName = "task-" + taskNum.get();
-      taskNum.incrementAndGet();
-    }
-
-    public void run() {
-      System.out.println("任务：" + taskName + " doing");
-      System.out.println(taskName + " 运行结束.");
-    }
-  }
 
   // 需要看文档比较一下这四种创建线程池方式的差异，代码结果不能直接比较出来
 

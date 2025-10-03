@@ -23,20 +23,6 @@ public class ThreadFactoryDemo {
     }
   }
 
-  //异步任务的执行目标类
-  static class TargetTask implements Runnable {
-    static AtomicInteger taskNum = new AtomicInteger(1);
-    String taskName;
-    public TargetTask() {
-      taskName = "task-" + taskNum.get();
-      taskNum.incrementAndGet();
-    }
-    public void run() {
-      System.out.println("任务：" + taskName + " doing");
-      System.out.println(taskName + " 运行结束.");
-    }
-  }
-
   @Test
   public void testThreadFactory () throws InterruptedException {
     // 使用自定义线程工厂快捷创建一个固定大小的线程池

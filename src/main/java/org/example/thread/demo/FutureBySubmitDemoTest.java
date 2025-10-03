@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
 public class FutureBySubmitDemoTest {
@@ -30,29 +29,11 @@ public class FutureBySubmitDemoTest {
     pool.shutdown();
   }
 
-
-  //异步任务的执行目标类
-  static class TargetTask implements Runnable {
-
-    static AtomicInteger taskNum = new AtomicInteger(1);
-    String taskName;
-
-    public TargetTask() {
-      taskName = "task-" + taskNum.get();
-      taskNum.incrementAndGet();
-    }
-
-    public void run() {
-      System.out.println("任务：" + taskName + " doing");
-      System.out.println(taskName + " 运行结束.");
-    }
-  }
-
   //异步的执行目标类：执行过程中将发生异常
   static class TargetTaskWithError extends TargetTask {
     public void run() {
       super.run();
-      throw new RuntimeException("Error from " + taskName);
+      throw new RuntimeException("Error from " + super.getTaskName());
     }
   }
 
