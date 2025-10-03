@@ -1,6 +1,8 @@
 package org.example.thread.demo;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadUtil {
@@ -42,6 +44,26 @@ public class ThreadUtil {
       } catch (Throwable e) {
         System.out.println(e.getMessage());
       }
+    }
+  }
+
+  // 懒汉式单例创建线程池：用于执行定时、顺序任务
+  static class SeqOrScheduledTargetThreadPoolLazyHolder {
+
+    // 线程池
+    static final ScheduledThreadPoolExecutor EXECUTOR = new ScheduledThreadPoolExecutor(1);
+
+    static {
+      //注册 JVM 关闭时的钩子函数
+      Runtime.getRuntime().addShutdownHook(new Thread(() ->
+          new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+              //优雅地关闭线程池
+              shutdownThreadPoolGracefully(EXECUTOR);
+              return null;
+            }
+          }));
     }
   }
 }
