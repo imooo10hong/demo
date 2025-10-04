@@ -3,6 +3,7 @@ package org.example.thread.demo;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
@@ -65,6 +66,26 @@ public class ExecutorDemoTest {
     Thread.sleep(SLEEP_GAP);
     System.out.println("关闭线程池");
     scheduled.shutdown();
+  }
+
+  // 单线程化线程池的corePoolSize始终保持为1并且不能被修改
+  @Test
+  public void testCorePoolSizeCannotModify()
+  {
+    //创建一个固定大小的线程池
+    ExecutorService fixedExecutorService = Executors.newFixedThreadPool(3);
+    ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) fixedExecutorService;
+    System.out.println(threadPoolExecutor.getCorePoolSize());
+    System.out.println(threadPoolExecutor.getMaximumPoolSize());
+    //设置核心线程数
+    threadPoolExecutor.setCorePoolSize(1);
+    System.out.println(threadPoolExecutor.getMaximumPoolSize());
+    System.out.println(threadPoolExecutor.getCorePoolSize());
+
+    //创建一个单线程化的线程池
+    ExecutorService singleExecutorService = Executors.newSingleThreadExecutor();
+    //转换成普通线程池，会抛出运行时异常 java.lang.ClassCastException
+    ((ThreadPoolExecutor) singleExecutorService).setCorePoolSize(8);
   }
 }
 
